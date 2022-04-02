@@ -17,6 +17,7 @@ export(int) var WALL_JUMP_CHECK_DIST = 3
 export(float) var WALL_JUMP_FORCE_TIME = 0.16
 export(float) var WALL_JUMP_HORIZONTAL_SPEED = MAX_SPEED + JUMP_HORIZONTAL_BOOST
 export(float) var WALL_SPEED_RENTENTION_TIME = 0.06
+export(int) var MAX_HEALTH = 100
 
 enum {
 	LEFT = -1,
@@ -32,6 +33,8 @@ var facing = NEUTRAL
 var is_holding = false
 var wall_speed_retained = 0
 
+var health = 100
+
 onready var flame = $Flame
 onready var coyote_jump_timer = $CoyoteJumpTimer
 onready var variable_jump_timer = $VariableJumpTimer
@@ -40,6 +43,15 @@ onready var left_wall_ray_cast = $LeftWallRayCast
 onready var right_wall_ray_cast = $RightWallRayCast
 onready var item_position = $ItemPosition
 
+var health_to_collider = {
+	100: Vector2(3, 7),
+	75: Vector2(3, 5),
+	50: Vector2(3, 3),
+	25: Vector2(3, 2),
+}
+
+func _ready():
+	flame.set_health(health)
 
 func _physics_process(delta):
 	just_jumped = false
@@ -137,7 +149,7 @@ func wall_jump_check(dir):
 		return right_wall_ray_cast.is_colliding()
 	
 	return false
-	
+
 func apply_gravity(delta: float):
 	max_fall = move_toward(max_fall, MAX_FALL, FAST_MAX_ACCEL * delta)
 	var mult = 0.5 if abs(motion.y) < HALF_GRAVITY_THRESHOLD and Input.is_action_pressed("jump") else 1.0
@@ -149,8 +161,33 @@ func apply_gravity(delta: float):
 		else:
 			variable_jump_timer.stop()
 
+func update_collider(extents):
+	if collider.shape.extents.x != extents.x || collider.shape.extents.y != extents.y:
+		var shape = RectangleShape2D.new()
+		shape.extents = extents
+		collider.shape = shape
+		collider.position = Vector2(0, -extents.y)
+
+func update_collider_for_health():
+	if health > 75:
+		update_collider(health_to_collider[100])
+	elif health > 50:
+		update_collider(health_to_collider[75])
+	elif health > 25:
+		update_collider(health_to_collider[50])
+	else:
+		update_collider(health_to_collider[25])
+
 func handle_collisions():
 	# Relies on speicifically using move_and_slide or mmove_and_slide_with_snap
 	for i in get_slide_count():
 		var collider = get_slide_collision(i).collider
 		var groups = collider.get_groups()
+
+func heal(amount):
+	health = max(0, min(MAX_HEALTH, health + amount))
+	update_collider_for_health()
+	flame.set_health(health)
+	
+func _on_HealthDecayTimer_timeout():
+	heal(-2.5)
