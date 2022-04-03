@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+const Fireball = preload("res://src/Fireball/Fireball.tscn")
+
 export(int) var ACCELERATION = 1000
 export(int) var MAX_SPEED = 90
 export(int) var FRICTION = 400
@@ -18,6 +20,8 @@ export(float) var WALL_JUMP_FORCE_TIME = 0.16
 export(float) var WALL_JUMP_HORIZONTAL_SPEED = MAX_SPEED + JUMP_HORIZONTAL_BOOST
 export(float) var WALL_SPEED_RENTENTION_TIME = 0.06
 export(int) var MAX_HEALTH = 100
+export(int) var MAX_FIREBALLS = 2
+export(int) var FIREBALL_COST = 15
 
 enum {
 	LEFT = -1,
@@ -34,6 +38,7 @@ var is_holding = false
 var wall_speed_retained = 0
 
 var health = 100
+var fireballs = 0
 
 onready var flame = $Flame
 onready var coyote_jump_timer = $CoyoteJumpTimer
@@ -41,7 +46,9 @@ onready var variable_jump_timer = $VariableJumpTimer
 onready var collider = $Collider
 onready var left_wall_ray_cast = $LeftWallRayCast
 onready var right_wall_ray_cast = $RightWallRayCast
-onready var item_position = $ItemPosition
+onready var shoot_cooldown_timer = $ShootCooldownTimer
+onready var shooting_position = $ShootingPosition
+onready var debug_label = $DebugLabel
 
 var health_to_collider = {
 	100: Vector2(3, 7),
@@ -68,7 +75,9 @@ func _physics_process(delta):
 	update_animations(input_vector)
 	move()
 	handle_collisions()
-
+	handle_additional_input()
+	update_shooting_position()
+	
 func update_animations(input_vector):
 	if input_vector.x != 0:
 		flame.scale.x = sign(input_vector.x)
@@ -166,7 +175,7 @@ func update_collider(extents):
 		var shape = RectangleShape2D.new()
 		shape.extents = extents
 		collider.shape = shape
-		collider.position = Vector2(0, -extents.y)
+		collider.position = Vector2(0, -extents.y)		
 
 func update_collider_for_health():
 	if health > 75:
@@ -190,4 +199,30 @@ func heal(amount):
 	flame.set_health(health)
 	
 func _on_HealthDecayTimer_timeout():
-	heal(-2.5)
+	heal(-1)
+
+func handle_additional_input():
+	if (health > 25 and
+	   Input.is_action_pressed("shoot") and
+	   fireballs < MAX_FIREBALLS and 
+	   shoot_cooldown_timer.time_left == 0):
+		shoot_fireball()
+		
+		
+func shoot_fireball():
+	fireballs += 1
+	shoot_cooldown_timer.start()
+	
+	var fireball = Utils.instance_scene_on_main(Fireball, shooting_position.global_position)
+	fireball.move_in_direction(flame.scale.x)
+	fireball.connect("fireball_vanished", self, "freeup_fireball")
+	
+	heal(-FIREBALL_COST)
+
+
+func freeup_fireball():
+	fireballs -= 1
+
+func update_shooting_position():
+	var extents = collider.shape.extents
+	shooting_position.position = Vector2(extents.x * flame.scale.x, -extents.y/2 - 2)
