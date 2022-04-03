@@ -49,6 +49,8 @@ onready var right_wall_ray_cast = $RightWallRayCast
 onready var shoot_cooldown_timer = $ShootCooldownTimer
 onready var shooting_position = $ShootingPosition
 onready var debug_label = $DebugLabel
+onready var jump_sound = $JumpSound
+onready var consume_sound = $ConsumeSound
 
 var health_to_collider = {
 	100: Vector2(3, 7),
@@ -59,6 +61,7 @@ var health_to_collider = {
 
 func _ready():
 	flame.set_health(health)
+	
 
 func _physics_process(delta):
 	just_jumped = false
@@ -145,11 +148,15 @@ func jump(input_vector, force):
 	motion.y = -force
 	variable_jump_speed = motion.y
 	
+	jump_sound.play()
+	
 func wall_jump(dir, force):
 	variable_jump_timer.start()
 	motion.x = dir * WALL_JUMP_HORIZONTAL_SPEED
 	motion.y = -force
 	variable_jump_speed = motion.y
+	
+	jump_sound.play()
 	
 func wall_jump_check(dir):
 	if dir == LEFT:
@@ -208,7 +215,10 @@ func handle_additional_input():
 	   shoot_cooldown_timer.time_left == 0):
 		shoot_fireball()
 		
-		
+
+func play_consume_sound():
+	consume_sound.play()
+
 func shoot_fireball():
 	fireballs += 1
 	shoot_cooldown_timer.start()

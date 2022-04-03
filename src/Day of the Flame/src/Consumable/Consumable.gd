@@ -9,5 +9,6 @@ func _on_Collider_body_entered(body):
 	print(body.name)
 	if body.is_in_group("player"):
 		var player = body as Player
+		player.play_consume_sound()
 		player.heal(heal_amount)
 		queue_free()
