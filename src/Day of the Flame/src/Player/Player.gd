@@ -22,6 +22,7 @@ export(float) var WALL_SPEED_RENTENTION_TIME = 0.06
 export(int) var MAX_HEALTH = 100
 export(int) var MAX_FIREBALLS = 2
 export(int) var FIREBALL_COST = 15
+export(int) var STARTING_HEALTH = 30
 
 enum {
 	LEFT = -1,
@@ -37,7 +38,7 @@ var facing = NEUTRAL
 var is_holding = false
 var wall_speed_retained = 0
 
-var health = 100
+var health = STARTING_HEALTH
 var fireballs = 0
 
 onready var flame = $Flame
@@ -51,6 +52,7 @@ onready var shooting_position = $ShootingPosition
 onready var debug_label = $DebugLabel
 onready var jump_sound = $JumpSound
 onready var consume_sound = $ConsumeSound
+onready var camera = $Camera
 
 var health_to_collider = {
 	100: Vector2(3, 7),
@@ -62,6 +64,8 @@ var health_to_collider = {
 func _ready():
 	flame.set_health(health)
 	
+#func _process(delta):
+#	debug_label.text = str(health)
 
 func _physics_process(delta):
 	just_jumped = false
@@ -236,3 +240,18 @@ func freeup_fireball():
 func update_shooting_position():
 	var extents = collider.shape.extents
 	shooting_position.position = Vector2(extents.x * flame.scale.x, -extents.y/2 - 2)
+
+func update_camera(room):
+	var collider = room.get_node("Collider")
+	var size = collider.shape.extents * 2
+	
+	camera.limit_left = collider.global_position.x - size.x / 2
+	camera.limit_top = collider.global_position.y - size.y / 2
+	camera.limit_right = camera.limit_left + size.x
+	camera.limit_bottom = camera.limit_top + size.y
+	
+func _on_RoomDetectorLeft_area_entered(room: Area2D):
+	update_camera(room)
+
+func _on_RoomDetectorRight_area_entered(room: Area2D):
+	update_camera(room)

@@ -103,6 +103,7 @@ shoot={
 2d_render/layer_2="fireball"
 2d_physics/layer_2="platform"
 2d_physics/layer_6="fireball"
+2d_physics/layer_7="room"
 
 [physics]
 

@@ -7,7 +7,7 @@ var fireballs = []
 
 func _ready():
 	var position = fireballs_position.position
-	for i in range(0, 20):
+	for i in range(0, 30):
 		var fireball = FireballSprite.instance()
 		fireball.global_position = position
 		fireball.visible = false

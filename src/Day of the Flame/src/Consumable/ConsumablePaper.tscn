@@ -7,7 +7,7 @@
 extents = Vector2( 2, 2 )
 
 [node name="ConsumablePaper" instance=ExtResource( 2 )]
-heal_amount = 15
+heal_amount = 20
 
 [node name="Sprite" parent="." index="0"]
 position = Vector2( 0, -16 )
