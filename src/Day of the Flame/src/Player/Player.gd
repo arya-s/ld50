@@ -22,7 +22,7 @@ export(float) var WALL_SPEED_RENTENTION_TIME = 0.06
 export(int) var MAX_HEALTH = 100
 export(int) var MAX_FIREBALLS = 2
 export(int) var FIREBALL_COST = 15
-export(int) var STARTING_HEALTH = 30
+export(int) var STARTING_HEALTH = 100
 
 enum {
 	LEFT = -1,

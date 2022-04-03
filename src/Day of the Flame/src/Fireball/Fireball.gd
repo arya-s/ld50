@@ -36,3 +36,13 @@ func move_in_direction(dir):
 # warning-ignore:unused_argument
 func _on_VisibilityNotifier2D_viewport_exited(viewport):
 	vanish()
+
+
+func _on_Hitbox_area_entered(area):
+	var parent = area.get_node('..')
+	
+	if parent.is_in_group('enemy'):
+		# Only vanish the fireball if the enemy is still alive
+		# decaying enemies are ignored
+		if parent.ALIVE:
+			vanish()
