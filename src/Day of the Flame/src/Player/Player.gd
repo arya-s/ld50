@@ -48,6 +48,7 @@ onready var shooting_position = $ShootingPosition
 onready var debug_label = $DebugLabel
 onready var jump_sound = $JumpSound
 onready var consume_sound = $ConsumeSound
+onready var dying_sound = $DyingSound
 onready var camera = $Camera
 onready var animation_player = $AnimationPlayer
 
@@ -281,7 +282,9 @@ func _on_RoomDetectorLeft_area_entered(room: Area2D):
 func _on_RoomDetectorRight_area_entered(room: Area2D):
 	update_camera(room)
 
-func die():
+func die():	
+	Global.play_dying_sound()
+	
 	player_stats.reset_player_stats()
 	State.ignored_level_transition = null
 	State.level_connection = null

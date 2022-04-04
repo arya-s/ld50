@@ -36,6 +36,7 @@ GameResourceLoader="*res://src/GameResourceLoader/GameResourceLoader.gd"
 State="*res://src/State/State.gd"
 Events="*res://src/Events/Events.gd"
 Utils="*res://src/Utils/Utils.gd"
+Global="*res://src/Global/Global.tscn"
 
 [display]
 
