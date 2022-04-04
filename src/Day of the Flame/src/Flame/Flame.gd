@@ -54,7 +54,7 @@ func set_if_different(obj, key, val):
 	
 
 func set_health(amount):
-	health = max(0, min(MAX_HEALTH, amount))
+	health = clamp(0, amount, MAX_HEALTH)
 	
 	if health > 75:
 		set_if_different(particles_base, "amount", particles[100].amount)

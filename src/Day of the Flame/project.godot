@@ -8,6 +8,22 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Resource",
+"class": "GameInstances",
+"language": "GDScript",
+"path": "res://src/GameInstances/GameInstances.gd"
+}, {
+"base": "Resource",
+"class": "PlayerStats",
+"language": "GDScript",
+"path": "res://src/PlayerStats/PlayerStats.gd"
+} ]
+_global_script_class_icons={
+"GameInstances": "",
+"PlayerStats": ""
+}
+
 [application]
 
 config/name="Day of the Flame"
@@ -16,6 +32,9 @@ config/icon="res://icon.png"
 
 [autoload]
 
+GameResourceLoader="*res://src/GameResourceLoader/GameResourceLoader.gd"
+State="*res://src/State/State.gd"
+Events="*res://src/Events/Events.gd"
 Utils="*res://src/Utils/Utils.gd"
 
 [display]

@@ -1,9 +1,11 @@
 extends Node
 
+var game_instances = GameResourceLoader.game_instances
+
 export(String, FILE, "Level_*.tscn") var starting_level
 
-func _ready():
-#	VisualServer.set_default_clear_color(Color('10141f'))
-	VisualServer.set_default_clear_color(Color('0e151c'))
+onready var current_level = starting_level
 
-	get_tree().change_scene(starting_level)
+func _ready():
+	VisualServer.set_default_clear_color(Color('0e151c'))
+	Utils.change_scene(starting_level)

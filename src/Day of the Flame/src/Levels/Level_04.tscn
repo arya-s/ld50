@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://src/RoomShape/RoomShape.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/Tilemap/TileMap.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/Levels/Level.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/LevelTransition/LevelTransition.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/LevelTransition/level_03__link__level_04.tres" type="Resource" id=5]
+[ext_resource path="res://src/LevelTransition/level_04__link__level_05.tres" type="Resource" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 240, 90 )
@@ -11,10 +13,16 @@ extents = Vector2( 240, 90 )
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 10, 40 )
 
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 24, 10 )
+
 [node name="Level_04" instance=ExtResource( 3 )]
 
-[node name="Player" parent="." index="0"]
-position = Vector2( -64, -1 )
+[node name="Bonfire" parent="." index="1"]
+position = Vector2( -64, 160 )
+
+[node name="SpawPoint" parent="Bonfire" index="4"]
+position = Vector2( -8, 0 )
 
 [node name="TileMap" parent="." index="2" instance=ExtResource( 2 )]
 collision_layer = 3
@@ -27,12 +35,33 @@ visible = false
 position = Vector2( -248, 90 )
 shape = SubResource( 1 )
 
-[node name="LevelTransition" parent="." index="4" instance=ExtResource( 4 )]
+[node name="NextLevelTransition" parent="." index="4" instance=ExtResource( 4 )]
 position = Vector2( -488, 144 )
 next_level = "res://src/Levels/Level_05.tscn"
+connection = ExtResource( 6 )
 
-[node name="CollisionShape2D" parent="LevelTransition" index="0"]
+[node name="Collider" parent="NextLevelTransition" index="0"]
 shape = SubResource( 2 )
 
+[node name="ExitPosition" parent="NextLevelTransition" index="1"]
+position = Vector2( 24, 32 )
+
+[node name="PreviousLevelTransition" parent="." index="5" instance=ExtResource( 4 )]
+position = Vector2( 0, -40 )
+next_level = "res://src/Levels/Level_03.tscn"
+connection = ExtResource( 5 )
+
+[node name="Collider" parent="PreviousLevelTransition" index="0"]
+position = Vector2( -64, 0 )
+shape = SubResource( 3 )
+
+[node name="ExitPosition" parent="PreviousLevelTransition" index="1"]
+position = Vector2( -64, 40 )
+
+[node name="Player" parent="." index="6"]
+position = Vector2( -64, -1 )
+
+[editable path="Bonfire"]
 [editable path="RoomShape"]
-[editable path="LevelTransition"]
+[editable path="NextLevelTransition"]
+[editable path="PreviousLevelTransition"]

@@ -1,12 +1,9 @@
 extends Node
 
-onready var hud = $GameUI/HUD
-onready var player = $Player
+const WORLD = preload("res://src/World/World.gd")
 
-
-func _process(delta):
-	update_hud()
+func _ready():
+	var parent = get_parent()
 	
-func update_hud():
-	var fireball_amount = 0 if player.health <= 25 else floor((player.health - 25) / player.FIREBALL_COST) + 1
-	hud.set_fireball_amount(fireball_amount)
+	if parent is WORLD:
+		parent.current_level = self

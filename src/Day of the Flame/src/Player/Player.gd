@@ -2,6 +2,9 @@ extends KinematicBody2D
 
 const Fireball = preload("res://src/Fireball/Fireball.tscn")
 
+var player_stats = GameResourceLoader.player_stats
+var game_instances = GameResourceLoader.game_instances
+
 export(int) var ACCELERATION = 1000
 export(int) var MAX_SPEED = 90
 export(int) var FRICTION = 400
@@ -19,10 +22,6 @@ export(int) var WALL_JUMP_CHECK_DIST = 3
 export(float) var WALL_JUMP_FORCE_TIME = 0.16
 export(float) var WALL_JUMP_HORIZONTAL_SPEED = MAX_SPEED + JUMP_HORIZONTAL_BOOST
 export(float) var WALL_SPEED_RENTENTION_TIME = 0.06
-export(int) var MAX_HEALTH = 100
-export(int) var MAX_FIREBALLS = 2
-export(int) var FIREBALL_COST = 15
-export(int) var STARTING_HEALTH = 100
 
 enum {
 	LEFT = -1,
@@ -38,9 +37,6 @@ var facing = NEUTRAL
 var is_holding = false
 var wall_speed_retained = 0
 
-var health = STARTING_HEALTH
-var fireballs = 0
-
 onready var flame = $Flame
 onready var coyote_jump_timer = $CoyoteJumpTimer
 onready var variable_jump_timer = $VariableJumpTimer
@@ -53,6 +49,7 @@ onready var debug_label = $DebugLabel
 onready var jump_sound = $JumpSound
 onready var consume_sound = $ConsumeSound
 onready var camera = $Camera
+onready var animation_player = $AnimationPlayer
 
 var health_to_collider = {
 	100: Vector2(3, 7),
@@ -61,11 +58,28 @@ var health_to_collider = {
 	25: Vector2(3, 2),
 }
 
+signal touched_level_transition(level_transition)
+
 func _ready():
-	flame.set_health(health)
+	flame.set_health(player_stats.health)
+	player_stats.connect("player_died", self, "_on_died")
+	game_instances.player = self
 	
-#func _process(delta):
-#	debug_label.text = str(health)
+	# Place the player in the correct level connection
+	if State.level_connection != null:
+		for level_transition in get_tree().get_nodes_in_group("level_transition"):
+			if level_transition != State.ignored_level_transition and level_transition.connection == State.level_connection:
+				global_position = level_transition.exit_position.global_position
+				break
+
+func _exit_tree():
+	game_instances.player = null
+
+func _process(delta):
+	if player_stats.health < player_stats.HEALTH_CRITICAL_THRESHOLD:
+		animation_player.play("low_hp")
+	else:
+		animation_player.stop(true)
 
 func _physics_process(delta):
 	just_jumped = false
@@ -189,11 +203,11 @@ func update_collider(extents):
 		collider.position = Vector2(0, -extents.y)		
 
 func update_collider_for_health():
-	if health > 75:
+	if player_stats.health > 75:
 		update_collider(health_to_collider[100])
-	elif health > 50:
+	elif player_stats.health > 50:
 		update_collider(health_to_collider[75])
-	elif health > 25:
+	elif player_stats.health > 25:
 		update_collider(health_to_collider[50])
 	else:
 		update_collider(health_to_collider[25])
@@ -205,17 +219,17 @@ func handle_collisions():
 		var groups = collider.get_groups()
 
 func heal(amount):
-	health = max(0, min(MAX_HEALTH, health + amount))
+	player_stats.health += amount
 	update_collider_for_health()
-	flame.set_health(health)
+	flame.set_health(player_stats.health)
 	
 func _on_HealthDecayTimer_timeout():
 	heal(-1)
 
 func handle_additional_input():
-	if (health > 25 and
+	if (player_stats.health > player_stats.HEALTH_LOW_THRESHOLD and
 	   Input.is_action_pressed("shoot") and
-	   fireballs < MAX_FIREBALLS and 
+	   player_stats.fireballs < player_stats.MAX_FIREBALLS and 
 	   shoot_cooldown_timer.time_left == 0):
 		shoot_fireball()
 		
@@ -224,18 +238,17 @@ func play_consume_sound():
 	consume_sound.play()
 
 func shoot_fireball():
-	fireballs += 1
+	player_stats.fireballs += 1
 	shoot_cooldown_timer.start()
 	
 	var fireball = Utils.instance_scene_on_main(Fireball, shooting_position.global_position)
 	fireball.move_in_direction(flame.scale.x)
 	fireball.connect("fireball_vanished", self, "freeup_fireball")
 	
-	heal(-FIREBALL_COST)
-
+	heal(-player_stats.FIREBALL_COST)
 
 func freeup_fireball():
-	fireballs -= 1
+	player_stats.fireballs -= 1
 
 func update_shooting_position():
 	var extents = collider.shape.extents
@@ -255,3 +268,7 @@ func _on_RoomDetectorLeft_area_entered(room: Area2D):
 
 func _on_RoomDetectorRight_area_entered(room: Area2D):
 	update_camera(room)
+
+func _on_died():
+	Utils.reset_scene()
+	queue_free()
