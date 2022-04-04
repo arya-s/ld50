@@ -11,6 +11,11 @@ onready var bounce_sound = $BounceSound
 var motion = Vector2.ZERO
 var direction = 1
 
+# hack: not actually used
+# we have this property so that checks for enemy ALIVE
+# won't fail when the hurtbox enters the hibox
+var ALIVE = true
+
 
 func _ready():
 	motion.x = direction * SPEED

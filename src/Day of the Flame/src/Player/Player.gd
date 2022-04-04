@@ -44,6 +44,13 @@ var facing = NEUTRAL
 var is_holding = false
 var wall_speed_retained = 0
 
+# hack: not actually used
+# we have this property so that checks for enemy ALIVE
+# won't fail when the hurtbox enters the hibox
+var ALIVE = true
+
+var invincible = false setget set_invincible
+
 onready var flame = $Flame
 onready var coyote_jump_timer = $CoyoteJumpTimer
 onready var variable_jump_timer = $VariableJumpTimer
@@ -59,6 +66,8 @@ onready var dying_sound = $DyingSound
 onready var camera = $Camera
 onready var animation_player = $AnimationPlayer
 onready var shooting_sound_player = $ShootingSoundPlayer
+onready var hurtbox_collider = $Hurtbox/Collider
+onready var invincible_animation_player = $InvincibleAnimationPlayer
 
 var health_to_collider = {
 	100: Vector2(3, 7),
@@ -221,11 +230,16 @@ func apply_gravity(delta: float):
 			variable_jump_timer.stop()
 
 func update_collider(extents):
-	if collider.shape.extents.x != extents.x || collider.shape.extents.y != extents.y:
-		var shape = RectangleShape2D.new()
-		shape.extents = extents
-		collider.shape = shape
-		collider.position = Vector2(0, -extents.y)		
+	if hurtbox_collider.shape == null || collider.shape.extents.x != extents.x || collider.shape.extents.y != extents.y:
+		var collider_shape = RectangleShape2D.new()
+		collider_shape.extents = extents
+		collider.shape = collider_shape
+		collider.position = Vector2(0, -extents.y)
+		
+		var hurtbox_shape = RectangleShape2D.new()
+		hurtbox_shape.extents = extents
+		hurtbox_collider.shape = hurtbox_shape
+		hurtbox_collider.position = Vector2(0, -extents.y)
 
 func update_collider_for_health():
 	if player_stats.health > 75:
@@ -316,3 +330,11 @@ func play_shooting_sound():
 	var sound = shooting_sounds[randi() % shooting_sounds.size()]
 	shooting_sound_player.stream = sound
 	shooting_sound_player.play()
+
+func set_invincible(value):
+	invincible = value
+
+func _on_Hurtbox_hit(damage):
+	if not invincible:
+		invincible_animation_player.play("invincible")
+		heal(-damage)

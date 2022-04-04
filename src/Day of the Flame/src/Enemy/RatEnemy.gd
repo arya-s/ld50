@@ -40,12 +40,10 @@ func _physics_process(delta):
 		motion = move_and_slide(motion, Vector2.UP)
 
 func kill():
-	animation_player.play("dying")
 	if ALIVE:
+		animation_player.play("dying")
 		Global.play_rat_dying_sound()
-	ALIVE = false
-
-
+		ALIVE = false
 
 func _on_Hurtbox_hit(damage):
 	kill()
