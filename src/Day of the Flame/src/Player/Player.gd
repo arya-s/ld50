@@ -68,10 +68,16 @@ func _ready():
 	# Place the player in the correct level connection
 	if State.level_connection != null:
 		for level_transition in get_tree().get_nodes_in_group("level_transition"):
+			# find the correct matching connection
 			if level_transition != State.ignored_level_transition and level_transition.connection == State.level_connection:
 				global_position = level_transition.exit_position.global_position
 				break
-
+	# Otherwise we should be spawning at the last spawn point
+	elif State.player_spawn_point != null:
+		global_position = State.player_spawn_point
+		
+	facing = State.player_spawm_facing
+		
 func _exit_tree():
 	game_instances.player = null
 
@@ -99,9 +105,15 @@ func _physics_process(delta):
 	handle_additional_input()
 	update_shooting_position()
 	
+	
+	# Kill the player dark souls style if we fall below the level
+	if global_position.y > 220:
+		die()
+	
 func update_animations(input_vector):
+	flame.scale.x = facing
 	if input_vector.x != 0:
-		flame.scale.x = sign(input_vector.x)
+		pass
 		#animate("run")
 	else:
 		flame.play_idle_animation()
@@ -269,6 +281,17 @@ func _on_RoomDetectorLeft_area_entered(room: Area2D):
 func _on_RoomDetectorRight_area_entered(room: Area2D):
 	update_camera(room)
 
+func die():
+	player_stats.reset_player_stats()
+	State.ignored_level_transition = null
+	State.level_connection = null
+
+	if State.last_bonfire == null:
+		Utils.change_scene(State.starting_level)
+	else:
+		var level = State.bonfires[State.last_bonfire].level
+		Utils.change_scene(level)
+		
 func _on_died():
-	Utils.reset_scene()
-	queue_free()
+	die()
+	

@@ -474,6 +474,10 @@ script = ExtResource( 10 )
 
 [node name="Bonfire" parent="." index="1"]
 position = Vector2( 48.1659, 136 )
+FACING = 1
+
+[node name="SpawnPoint" parent="Bonfire" index="4"]
+position = Vector2( 11.8341, 0 )
 
 [node name="TileMap" parent="." index="2" instance=ExtResource( 2 )]
 tile_set = SubResource( 48 )
@@ -506,6 +510,7 @@ position = Vector2( -24, 24 )
 position = Vector2( 0, 120 )
 next_level = "res://src/Levels/Level_Furnace.tscn"
 connection = ExtResource( 8 )
+facing = 1
 
 [node name="Collider" parent="ExtraLevelTransition" index="0"]
 position = Vector2( -8, 0 )
@@ -531,6 +536,7 @@ position = Vector2( 80, -24 )
 [node name="Player" parent="." index="11"]
 position = Vector2( 80, -24 )
 
+[editable path="Bonfire"]
 [editable path="MainRoomShape"]
 [editable path="NextLevelTransition"]
 [editable path="ExtraLevelTransition"]

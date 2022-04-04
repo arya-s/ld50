@@ -17,8 +17,8 @@ extents = Vector2( 10, 40 )
 [node name="Bonfire" parent="." index="1"]
 position = Vector2( -112, 136 )
 
-[node name="SpawPoint" parent="Bonfire" index="4"]
-position = Vector2( -16, -4 )
+[node name="SpawnPoint" parent="Bonfire" index="4"]
+position = Vector2( -16, 0 )
 
 [node name="TileMap" parent="." index="2" instance=ExtResource( 2 )]
 collision_layer = 3

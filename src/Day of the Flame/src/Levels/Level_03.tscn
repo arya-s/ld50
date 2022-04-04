@@ -18,9 +18,10 @@ extents = Vector2( 10, 24 )
 
 [node name="Bonfire" parent="." index="1"]
 position = Vector2( 32, 160 )
+FACING = 1
 
-[node name="SpawPoint" parent="Bonfire" index="4"]
-position = Vector2( 8, 0 )
+[node name="SpawnPoint" parent="Bonfire" index="4"]
+position = Vector2( 12, 0 )
 
 [node name="TileMap" parent="." index="2" instance=ExtResource( 2 )]
 position = Vector2( 1, 0 )
@@ -38,6 +39,7 @@ shape = SubResource( 1 )
 position = Vector2( 344, 159 )
 next_level = "res://src/Levels/Level_04.tscn"
 connection = ExtResource( 5 )
+facing = 1
 
 [node name="Collider" parent="NextLevelTransition" index="0"]
 shape = SubResource( 2 )
@@ -49,6 +51,7 @@ position = Vector2( 32, 1 )
 position = Vector2( -8, 152 )
 next_level = "res://src/Levels/Level_02.tscn"
 connection = ExtResource( 6 )
+facing = 1
 
 [node name="Collider" parent="PreviousLevelTransition" index="0"]
 shape = SubResource( 2 )

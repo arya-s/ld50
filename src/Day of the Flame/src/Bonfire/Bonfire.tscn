@@ -118,7 +118,7 @@ texture = SubResource( 10 )
 position = Vector2( 0, -4 )
 shape = SubResource( 11 )
 
-[node name="SpawPoint" type="Position2D" parent="."]
+[node name="SpawnPoint" type="Position2D" parent="."]
 position = Vector2( 7, -4 )
 
 [connection signal="body_entered" from="." to="." method="_on_Bonfire_body_entered"]

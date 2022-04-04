@@ -31,3 +31,7 @@ func set_health(value):
 
 func set_fireballs(value):
 	fireballs = clamp(0, value, MAX_FIREBALLS)
+	
+func reset_player_stats():
+	set_health(STARTING_HEALTH)
+	set_fireballs(0)

@@ -13,6 +13,10 @@ extents = Vector2( 8, 32 )
 
 [node name="Bonfire" parent="." index="1"]
 position = Vector2( 264, 176 )
+FACING = 1
+
+[node name="SpawnPoint" parent="Bonfire" index="4"]
+position = Vector2( 11, 0 )
 
 [node name="TileMap" parent="." index="2" instance=ExtResource( 2 )]
 collision_layer = 3
@@ -35,4 +39,5 @@ position = Vector2( -16, 24 )
 [node name="Player" parent="." index="5"]
 position = Vector2( 312, 176 )
 
+[editable path="Bonfire"]
 [editable path="PreviousLevelTransition"]

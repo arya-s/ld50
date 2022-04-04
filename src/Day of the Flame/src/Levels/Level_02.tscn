@@ -20,6 +20,10 @@ extents = Vector2( 10, 32 )
 
 [node name="Bonfire" parent="." index="1"]
 position = Vector2( 128, 97 )
+FACING = 1
+
+[node name="SpawnPoint" parent="Bonfire" index="4"]
+position = Vector2( 12, 0 )
 
 [node name="RoomShape" parent="." index="2" instance=ExtResource( 1 )]
 visible = false
@@ -47,6 +51,7 @@ position = Vector2( -24, 10 )
 [node name="PreviousLevelTransition" parent="." index="5" instance=ExtResource( 4 )]
 next_level = "res://src/Levels/Level_01.tscn"
 connection = ExtResource( 5 )
+facing = 1
 
 [node name="Collider" parent="PreviousLevelTransition" index="0"]
 position = Vector2( -8, 48 )
@@ -58,6 +63,7 @@ position = Vector2( 16, 64 )
 [node name="Player" parent="." index="6"]
 position = Vector2( 16, 64 )
 
+[editable path="Bonfire"]
 [editable path="RoomShape"]
 [editable path="NextLevelTransition"]
 [editable path="PreviousLevelTransition"]

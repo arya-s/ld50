@@ -17,9 +17,10 @@ extents = Vector2( 10, 48 )
 
 [node name="Bonfire" parent="." index="1"]
 position = Vector2( 160, 176 )
+FACING = 1
 
-[node name="SpawPoint" parent="Bonfire" index="4"]
-position = Vector2( -8, 0 )
+[node name="SpawnPoint" parent="Bonfire" index="4"]
+position = Vector2( 16, 0 )
 
 [node name="RoomShape" parent="." index="2" instance=ExtResource( 1 )]
 visible = false
@@ -32,6 +33,7 @@ tile_data = PoolIntArray( -3, 0, 8, -2, 0, 65547, -1, 0, 65547, -65536, 0, 13107
 position = Vector2( -16, 157 )
 next_level = "res://src/Levels/Level_Oil.tscn"
 connection = ExtResource( 5 )
+facing = 1
 
 [node name="Collider" parent="NextLevelTransition" index="0"]
 shape = SubResource( 1 )
