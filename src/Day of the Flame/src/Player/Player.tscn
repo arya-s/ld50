@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://assets/fire_100hp.mp3" type="AudioStream" id=1]
 [ext_resource path="res://src/Player/Player.gd" type="Script" id=2]
 [ext_resource path="res://src/Flame/Flame.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/fire_jump.mp3" type="AudioStream" id=4]
 [ext_resource path="res://assets/consume.mp3" type="AudioStream" id=5]
 [ext_resource path="res://src/Camera/Camera.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/Hurtbox/Hurtbox.tscn" type="PackedScene" id=7]
@@ -149,6 +150,7 @@ __meta__ = {
 }
 
 [node name="JumpSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
 volume_db = 16.0
 
 [node name="ConsumeSound" type="AudioStreamPlayer" parent="."]

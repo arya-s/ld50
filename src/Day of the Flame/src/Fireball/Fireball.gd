@@ -3,7 +3,7 @@ extends KinematicBody2D
 signal fireball_vanished
 
 export(int) var SPEED = 200
-export(int) var GRAVITY = 33
+export(int) var GRAVITY = 22
 export(int) var BOUNCE = -150
 
 onready var bounce_sound = $BounceSound

@@ -15,10 +15,11 @@ onready var floor_right = $FloorRight
 onready var wall_left = $WallLeft
 onready var wall_right = $WallRight
 
-var state
+var state = WALKING_DIRECTION
 
 func _ready():
 	state = WALKING_DIRECTION
+	ALIVE = true
 	
 func _physics_process(delta):
 	motion.y += GRAVITY

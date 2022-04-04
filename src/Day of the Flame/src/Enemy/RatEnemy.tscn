@@ -6,7 +6,7 @@
 [ext_resource path="res://src/Flame/firegradient.tres" type="Texture" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 3.5, 2.5 )
+extents = Vector2( 4, 3 )
 
 [sub_resource type="Animation" id=2]
 resource_name = "dying"
@@ -102,7 +102,7 @@ texture = ExtResource( 3 )
 hframes = 7
 
 [node name="Collider" parent="." index="1"]
-position = Vector2( 0, -2.5 )
+position = Vector2( 0, -3 )
 shape = SubResource( 1 )
 
 [node name="AnimationPlayer" parent="." index="2"]
@@ -111,15 +111,15 @@ anims/dying = SubResource( 2 )
 anims/run = SubResource( 3 )
 
 [node name="FloorLeft" type="RayCast2D" parent="." index="3"]
-position = Vector2( -3.5, 0 )
+position = Vector2( -3, -1 )
 enabled = true
-cast_to = Vector2( 0, 4 )
+cast_to = Vector2( -1, 6 )
 collision_mask = 2
 
 [node name="FloorRight" type="RayCast2D" parent="." index="4"]
-position = Vector2( 3.5, 0 )
+position = Vector2( 3, -1 )
 enabled = true
-cast_to = Vector2( 0, 4 )
+cast_to = Vector2( 1, 6 )
 collision_mask = 2
 
 [node name="WallLeft" type="RayCast2D" parent="." index="5"]
@@ -143,11 +143,15 @@ fixed_fps = 24
 local_coords = false
 process_material = SubResource( 4 )
 
+[node name="Hurtbox" parent="." index="8"]
+visible = false
+
 [node name="Collider" parent="Hurtbox" index="0"]
 position = Vector2( 0, -3 )
 shape = SubResource( 5 )
 
 [node name="Hitbox" parent="." index="9"]
+visible = false
 damage = 25
 
 [node name="Collider" parent="Hitbox" index="0"]

@@ -1,6 +1,7 @@
 extends Node2D
 
 onready var sprite = $Sprite
+onready var hitbox_collider = $Hitbox/Collider
 export(Vector2) var velocity = Vector2.ZERO
 var ALIVE = true
 
@@ -10,7 +11,9 @@ func _ready():
 	
 	var s = -1 if randf() > 0.5 else 1
 	var a = randi() % 4
+	var p = Vector2(s * a, 0)
 	sprite.position = Vector2(s * a, 0)
+	hitbox_collider.position = Vector2(s * a, -8)
 
 func _process(delta):
 	position += velocity * delta
