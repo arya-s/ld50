@@ -4,6 +4,7 @@ onready var particles_base = $ParticlesBase
 onready var particles_core = $PartcilesCore
 onready var spawn_point = $SpawnPoint
 onready var lit_sound = $LitSound
+onready var heal_area = $HealArea
 
 export(bool) var ACTIVE = false
 export(State.DIRECTION) var FACING = State.DIRECTION.LEFT
@@ -16,6 +17,7 @@ func set_active(active):
 
 func _on_Bonfire_body_entered(body):
 	if body.is_in_group("player"):
+		
 		if not ACTIVE:
 			lit_sound.play()
 		
@@ -27,4 +29,4 @@ func _on_Bonfire_body_entered(body):
 		State.bonfires[level].bonfire = self
 		State.player_spawm_facing = FACING
 		set_active(true)
-		
+		heal_area.ACTIVE = true

@@ -97,6 +97,8 @@ func _process(delta):
 		animation_player.play("low_hp")
 	else:
 		animation_player.stop(true)
+		
+	debug_label.text = str(player_stats.health)
 
 func _physics_process(delta):
 	just_jumped = false

@@ -1,8 +1,9 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://assets/bonfire.png" type="Texture" id=1]
 [ext_resource path="res://src/Bonfire/Bonfire.gd" type="Script" id=2]
 [ext_resource path="res://assets/consume.mp3" type="AudioStream" id=3]
+[ext_resource path="res://src/HealArea/HealArea.tscn" type="PackedScene" id=4]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 light_mode = 1
@@ -84,6 +85,9 @@ load_path = "res://.import/flame_core.png-6d391849ce55f9a02ccd5b96b17d2970.stex"
 [sub_resource type="RectangleShape2D" id=11]
 extents = Vector2( 3, 5 )
 
+[sub_resource type="CircleShape2D" id=12]
+radius = 9.8217
+
 [node name="Bonfire" type="Area2D"]
 collision_layer = 0
 script = ExtResource( 2 )
@@ -125,4 +129,14 @@ position = Vector2( 7, -4 )
 [node name="LitSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
 
+[node name="HealArea" parent="." instance=ExtResource( 4 )]
+HEAL_PER_TICK = 10
+ACTIVE = false
+
+[node name="CollisionShape2D" parent="HealArea" index="0"]
+position = Vector2( 0, -3.5 )
+shape = SubResource( 12 )
+
 [connection signal="body_entered" from="." to="." method="_on_Bonfire_body_entered"]
+
+[editable path="HealArea"]
