@@ -100,6 +100,8 @@ stream = ExtResource( 1 )
 volume_db = 8.0
 autoplay = true
 
+[node name="ShootingSoundPlayer" type="AudioStreamPlayer" parent="."]
+
 [node name="Camera" parent="." instance=ExtResource( 6 )]
 
 [node name="RoomDetectorLeft" type="Area2D" parent="."]

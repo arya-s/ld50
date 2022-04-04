@@ -5,6 +5,13 @@ const Fireball = preload("res://src/Fireball/Fireball.tscn")
 var player_stats = GameResourceLoader.player_stats
 var game_instances = GameResourceLoader.game_instances
 
+var shooting_sounds = [
+	preload("res://assets/fireball_1.mp3"),
+	preload("res://assets/fireball_2.mp3"),
+	preload("res://assets/fireball_3.mp3"),
+	preload("res://assets/fireball_4.mp3"),
+]
+
 export(int) var ACCELERATION = 1000
 export(int) var MAX_SPEED = 90
 export(int) var FRICTION = 400
@@ -51,6 +58,7 @@ onready var consume_sound = $ConsumeSound
 onready var dying_sound = $DyingSound
 onready var camera = $Camera
 onready var animation_player = $AnimationPlayer
+onready var shooting_sound_player = $ShootingSoundPlayer
 
 var health_to_collider = {
 	100: Vector2(3, 7),
@@ -62,6 +70,8 @@ var health_to_collider = {
 signal touched_level_transition(level_transition)
 
 func _ready():
+	shooting_sounds.shuffle()
+	
 	flame.set_health(player_stats.health)
 	player_stats.connect("player_died", self, "_on_died")
 	game_instances.player = self
@@ -251,6 +261,8 @@ func play_consume_sound():
 	consume_sound.play()
 
 func shoot_fireball():
+	play_shooting_sound()
+	
 	player_stats.fireballs += 1
 	shoot_cooldown_timer.start()
 	
@@ -283,7 +295,7 @@ func _on_RoomDetectorRight_area_entered(room: Area2D):
 	update_camera(room)
 
 func die():	
-	Global.play_dying_sound()
+	Global.play_player_dying_sound()
 	
 	player_stats.reset_player_stats()
 	State.ignored_level_transition = null
@@ -298,3 +310,7 @@ func die():
 func _on_died():
 	die()
 	
+func play_shooting_sound():
+	var sound = shooting_sounds[randi() % shooting_sounds.size()]
+	shooting_sound_player.stream = sound
+	shooting_sound_player.play()

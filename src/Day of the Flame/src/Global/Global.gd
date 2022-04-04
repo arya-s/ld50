@@ -1,6 +1,10 @@
 extends Node
 
-onready var dying_sound = $DyingSound
+onready var player_dying_sound = $PlayerDyingSound
+onready var rat_dying_sound = $RatDyingSound
 
-func play_dying_sound():
-	dying_sound.play()
+func play_player_dying_sound():
+	player_dying_sound.play()
+
+func play_rat_dying_sound():
+	rat_dying_sound.play()

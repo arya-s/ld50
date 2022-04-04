@@ -41,6 +41,8 @@ func _physics_process(delta):
 
 func kill():
 	animation_player.play("dying")
+	if ALIVE:
+		Global.play_rat_dying_sound()
 	ALIVE = false
 
 

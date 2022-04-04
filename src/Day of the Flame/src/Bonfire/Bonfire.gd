@@ -3,6 +3,7 @@ extends Node2D
 onready var particles_base = $ParticlesBase
 onready var particles_core = $PartcilesCore
 onready var spawn_point = $SpawnPoint
+onready var lit_sound = $LitSound
 
 export(bool) var ACTIVE = false
 export(State.DIRECTION) var FACING = State.DIRECTION.LEFT
@@ -15,6 +16,9 @@ func set_active(active):
 
 func _on_Bonfire_body_entered(body):
 	if body.is_in_group("player"):
+		if not ACTIVE:
+			lit_sound.play()
+		
 		var level = get_node("../").name
 		State.last_bonfire = level
 	

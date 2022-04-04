@@ -6,6 +6,8 @@ export(int) var SPEED = 200
 export(int) var GRAVITY = 22
 export(int) var BOUNCE = -150
 
+onready var bounce_sound = $BounceSound
+
 var motion = Vector2.ZERO
 var direction = 1
 
@@ -22,6 +24,7 @@ func _physics_process(delta):
 
 	if is_on_floor():
 		motion.y = BOUNCE
+		bounce_sound.play()
 
 	motion = move_and_slide(motion, Vector2.UP)
 
