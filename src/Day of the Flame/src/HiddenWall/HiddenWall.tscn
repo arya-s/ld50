@@ -8,7 +8,7 @@
 [ext_resource path="res://assets/secret_tile.png" type="Texture" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 4, 4 )
+extents = Vector2( 3, 3 )
 
 [node name="HiddenWall" type="StaticBody2D"]
 collision_layer = 2

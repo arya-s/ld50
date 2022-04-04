@@ -324,13 +324,13 @@ points = PoolVector2Array( 0, 0, 8, 0, 8, 8, 0, 8 )
 } ]
 0/z_index = 0
 
-[sub_resource type="RectangleShape2D" id=49]
+[sub_resource type="RectangleShape2D" id=53]
 extents = Vector2( 464, 90 )
 
-[sub_resource type="RectangleShape2D" id=50]
+[sub_resource type="RectangleShape2D" id=54]
 extents = Vector2( 10, 32 )
 
-[sub_resource type="RectangleShape2D" id=51]
+[sub_resource type="RectangleShape2D" id=55]
 extents = Vector2( 10, 24 )
 
 [node name="Level_01" instance=ExtResource( 3 )]
@@ -353,7 +353,7 @@ visible = false
 
 [node name="Collider" parent="MainRoomShape" index="0"]
 position = Vector2( 464, 90 )
-shape = SubResource( 49 )
+shape = SubResource( 53 )
 
 [node name="TileMap2" parent="." index="4" instance=ExtResource( 2 )]
 collision_layer = 3
@@ -365,7 +365,7 @@ next_level = "res://src/Levels/Level_02.tscn"
 connection = ExtResource( 9 )
 
 [node name="Collider" parent="NextLevelTransition" index="0"]
-shape = SubResource( 50 )
+shape = SubResource( 54 )
 
 [node name="ExitPosition" parent="NextLevelTransition" index="1"]
 position = Vector2( -24, 24 )
@@ -377,7 +377,7 @@ connection = ExtResource( 8 )
 
 [node name="Collider" parent="ExtraLevelTransition" index="0"]
 position = Vector2( -8, 0 )
-shape = SubResource( 51 )
+shape = SubResource( 55 )
 
 [node name="ExitPosition" parent="ExtraLevelTransition" index="1"]
 position = Vector2( 10, 16 )

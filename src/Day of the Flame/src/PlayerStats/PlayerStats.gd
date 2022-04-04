@@ -14,7 +14,6 @@ var active_bonfires = {
 	'Level_02': false,
 	'Level_03': false,
 	'Level_04': false,
-	'Level 05': false,
 	'Level_Oil': false,
 	'Level_Furnace': false
 }
