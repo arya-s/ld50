@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=2]
+[gd_scene load_steps=63 format=2]
 
 [ext_resource path="res://assets/tilemap8x8.png" type="Texture" id=1]
 [ext_resource path="res://src/Tilemap/TileMap.tscn" type="PackedScene" id=2]
@@ -10,7 +10,7 @@
 [ext_resource path="res://src/LevelTransition/level_01__link__level_furnance.tres" type="Resource" id=8]
 [ext_resource path="res://src/LevelTransition/level_01__link__level_02.tres" type="Resource" id=9]
 [ext_resource path="res://src/Levels/Level_01.gd" type="Script" id=10]
-[ext_resource path="res://assets/water_pipe_spriteset.png" type="Texture" id=12]
+[ext_resource path="res://src/WaterPipe/CheapWaterPipePoolDrip.tscn" type="PackedScene" id=11]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 8, 0, 8, 8, 0, 8 )
@@ -470,24 +470,6 @@ extents = Vector2( 10, 32 )
 [sub_resource type="RectangleShape2D" id=51]
 extents = Vector2( 10, 24 )
 
-[sub_resource type="Animation" id=52]
-resource_name = "waterpipe"
-length = 1.15
-loop = true
-step = 0.05
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1, 1.05, 1.1 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22 ]
-}
-
 [node name="Level_01" instance=ExtResource( 3 )]
 script = ExtResource( 10 )
 
@@ -495,7 +477,7 @@ script = ExtResource( 10 )
 position = Vector2( 48.1659, 136 )
 FACING = 1
 
-[node name="SpawnPoint" parent="Bonfire" index="4"]
+[node name="SpawnPoint" parent="Bonfire" index="2"]
 position = Vector2( 11.8341, 0 )
 
 [node name="TileMap" parent="." index="2" instance=ExtResource( 2 )]
@@ -577,18 +559,32 @@ position = Vector2( 80, -24 )
 [node name="SpriteTilemap" parent="." index="16"]
 tile_data = PoolIntArray( 55, 3, 0, 56, 4, 0, 57, 4, 0, 58, 5, 0, 59, 0, 655383, 61, 0, 655384, 65, 0, 655381, 66, 0, 655382, 67, 0, 655383, 68, 0, 655382, 69, 0, 655383, 70, 0, 655382, 71, 0, 655383, 75, 0, 655383, 77, 0, 655376, 78, 0, 655377, 79, 0, 655376, 80, 0, 655377, 81, 0, 655378, 65591, 0, 720911, 65592, 0, 720917, 65593, 0, 720918, 65602, 0, 720917, 65603, 0, 720920, 65604, 0, 720918, 65605, 0, 720920, 65606, 0, 720918, 65607, 0, 720919, 65617, 0, 720914, 131127, 0, 720917, 131128, 0, 720919, 131153, 0, 720914, 196663, 0, 720911, 196689, 0, 720914, 262199, 0, 720911, 262225, 0, 720914 )
 
-[node name="Sprite" type="Sprite" parent="." index="17"]
-position = Vector2( 536, 64 )
-texture = ExtResource( 12 )
-hframes = 24
-frame = 23
+[node name="CheapWaterPipePoolDrip" parent="." index="17" instance=ExtResource( 11 )]
+position = Vector2( 480, 48 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="18"]
-autoplay = "waterpipe"
-anims/waterpipe = SubResource( 52 )
+[node name="WaterSpawnerLeft" parent="CheapWaterPipePoolDrip" index="3"]
+water_interval = 1.5
+
+[node name="WaterSpawnerLeft2" parent="CheapWaterPipePoolDrip" index="4"]
+water_interval = 1.0
+
+[node name="CheapWaterPipePoolDrip2" parent="." index="18" instance=ExtResource( 11 )]
+position = Vector2( 608, 48 )
+
+[node name="WaterSpawnerLeft" parent="CheapWaterPipePoolDrip2" index="3"]
+water_interval = 1.0
+
+[node name="WaterSpawnerLeft2" parent="CheapWaterPipePoolDrip2" index="4"]
+water_interval = 1.5
 
 [editable path="Bonfire"]
 [editable path="Bonfire/HealArea"]
 [editable path="MainRoomShape"]
 [editable path="NextLevelTransition"]
 [editable path="ExtraLevelTransition"]
+[editable path="CheapWaterPipePoolDrip"]
+[editable path="CheapWaterPipePoolDrip/WaterSpawnerLeft"]
+[editable path="CheapWaterPipePoolDrip/WaterSpawnerLeft2"]
+[editable path="CheapWaterPipePoolDrip2"]
+[editable path="CheapWaterPipePoolDrip2/WaterSpawnerLeft"]
+[editable path="CheapWaterPipePoolDrip2/WaterSpawnerLeft2"]

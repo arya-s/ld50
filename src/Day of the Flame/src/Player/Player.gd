@@ -106,6 +106,7 @@ func _process(delta):
 		animation_player.play("low_hp")
 	else:
 		animation_player.stop(true)
+		animation_player.play("reset_from_low_hp")
 		
 	debug_label.text = str(player_stats.health)
 
