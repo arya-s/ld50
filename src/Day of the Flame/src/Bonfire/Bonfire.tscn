@@ -4,6 +4,8 @@
 [ext_resource path="res://src/Bonfire/Bonfire.gd" type="Script" id=2]
 [ext_resource path="res://assets/consume.mp3" type="AudioStream" id=3]
 [ext_resource path="res://src/HealArea/HealArea.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/flame_base_100-75hp.png" type="Texture" id=5]
+[ext_resource path="res://assets/fame_core_100-75hp.png" type="Texture" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 5.18478, 8.36995 )
@@ -47,9 +49,6 @@ anim_speed = 0.2
 anim_offset = 1.0
 anim_offset_random = 1.0
 
-[sub_resource type="StreamTexture" id=7]
-load_path = "res://.import/flame_base.png-1c8ea438bf7307d6d87102f7a04c4a02.stex"
-
 [sub_resource type="CanvasItemMaterial" id=8]
 particles_animation = true
 particles_anim_h_frames = 4
@@ -84,9 +83,6 @@ color = Color( 0.980392, 0.666667, 0, 1 )
 anim_speed = 1.0
 anim_offset = 1.0
 anim_offset_random = 1.0
-
-[sub_resource type="StreamTexture" id=12]
-load_path = "res://.import/flame_core.png-6d391849ce55f9a02ccd5b96b17d2970.stex"
 
 [node name="Bonfire" type="Area2D"]
 collision_layer = 0
@@ -124,7 +120,7 @@ randomness = 1.0
 fixed_fps = 24
 local_coords = false
 process_material = SubResource( 6 )
-texture = SubResource( 7 )
+texture = ExtResource( 5 )
 
 [node name="PartcilesCore" type="Particles2D" parent="."]
 material = SubResource( 8 )
@@ -136,7 +132,7 @@ randomness = 0.8
 fixed_fps = 24
 local_coords = false
 process_material = SubResource( 11 )
-texture = SubResource( 12 )
+texture = ExtResource( 6 )
 
 [connection signal="body_entered" from="." to="." method="_on_Bonfire_body_entered"]
 
