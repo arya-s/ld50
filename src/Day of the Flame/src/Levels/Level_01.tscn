@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=2]
+[gd_scene load_steps=64 format=2]
 
 [ext_resource path="res://assets/tilemap8x8.png" type="Texture" id=1]
 [ext_resource path="res://src/Tilemap/TileMap.tscn" type="PackedScene" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://src/LevelTransition/level_01__link__level_02.tres" type="Resource" id=9]
 [ext_resource path="res://src/Levels/Level_01.gd" type="Script" id=10]
 [ext_resource path="res://src/WaterPipe/CheapWaterPipePoolDrip.tscn" type="PackedScene" id=11]
+[ext_resource path="res://src/HiddenWall/HiddenWall.tscn" type="PackedScene" id=12]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 8, 0, 8, 8, 0, 8 )
@@ -576,6 +577,18 @@ water_interval = 1.0
 
 [node name="WaterSpawnerLeft2" parent="CheapWaterPipePoolDrip2" index="4"]
 water_interval = 1.5
+
+[node name="HiddenWall" parent="." index="19" instance=ExtResource( 12 )]
+position = Vector2( 640, 137 )
+
+[node name="ConsumablePaper3" parent="." index="20" instance=ExtResource( 7 )]
+position = Vector2( 456, 153 )
+
+[node name="ConsumablePaper4" parent="." index="21" instance=ExtResource( 7 )]
+position = Vector2( 472, 153 )
+
+[node name="ConsumablePaper5" parent="." index="22" instance=ExtResource( 7 )]
+position = Vector2( 544, 152 )
 
 [editable path="Bonfire"]
 [editable path="Bonfire/HealArea"]
