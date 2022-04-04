@@ -11,7 +11,9 @@ radius = 1.84635
 [sub_resource type="CircleShape2D" id=2]
 radius = 1.79217
 
-[node name="Fireball" type="KinematicBody2D"]
+[node name="Fireball" type="KinematicBody2D" groups=[
+"fire_ball",
+]]
 collision_layer = 32
 collision_mask = 2
 script = ExtResource( 3 )

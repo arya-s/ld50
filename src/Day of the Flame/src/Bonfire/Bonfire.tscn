@@ -83,13 +83,14 @@ anim_offset_random = 1.0
 load_path = "res://.import/flame_core.png-6d391849ce55f9a02ccd5b96b17d2970.stex"
 
 [sub_resource type="RectangleShape2D" id=11]
-extents = Vector2( 3, 5 )
+extents = Vector2( 5.18478, 8.36995 )
 
 [sub_resource type="CircleShape2D" id=12]
 radius = 9.8217
 
 [node name="Bonfire" type="Area2D"]
 collision_layer = 0
+collision_mask = 33
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -120,7 +121,7 @@ process_material = SubResource( 9 )
 texture = SubResource( 10 )
 
 [node name="Collider" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -4 )
+position = Vector2( -0.397297, -5.12568 )
 shape = SubResource( 11 )
 
 [node name="SpawnPoint" type="Position2D" parent="."]

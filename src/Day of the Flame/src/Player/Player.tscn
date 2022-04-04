@@ -79,6 +79,7 @@ shape = SubResource( 1 )
 position = Vector2( 3, -7 )
 
 [node name="DebugLabel" type="Label" parent="."]
+visible = false
 margin_left = -20.106
 margin_top = -35.7904
 margin_right = 19.894

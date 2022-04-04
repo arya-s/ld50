@@ -16,7 +16,7 @@ func set_active(active):
 
 
 func _on_Bonfire_body_entered(body):
-	if body.is_in_group("player"):
+	if body.is_in_group("player") or body.is_in_group("fire_ball"):
 		
 		if not ACTIVE:
 			lit_sound.play()
