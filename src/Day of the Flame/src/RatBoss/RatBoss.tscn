@@ -1,0 +1,304 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://assets/rat_boss.png" type="Texture" id=1]
+[ext_resource path="res://src/Hurtbox/Hurtbox.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/Hitbox/Hitbox.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/RatBoss/RatBoss.gd" type="Script" id=4]
+[ext_resource path="res://src/Flame/Flame.tscn" type="PackedScene" id=5]
+
+[sub_resource type="Animation" id=1]
+resource_name = "dying"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 15, 16, 17, 18 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Flame/ParticlesBase:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Flame/PartcilesCore:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Flame2/ParticlesBase:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Flame2/PartcilesCore:emitting")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "idle"
+length = 0.8
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 7, 8, 9, 10, 11, 12, 13, 14 ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5 ]
+}
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 40, 24 )
+
+[sub_resource type="CapsuleShape2D" id=5]
+radius = 24.0
+height = 60.0
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 10, 6 )
+
+[sub_resource type="Curve" id=7]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.0790191, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=8]
+curve = SubResource( 7 )
+
+[sub_resource type="ParticlesMaterial" id=9]
+lifetime_randomness = 0.2
+trail_divisor = 4
+emission_shape = 1
+emission_sphere_radius = 8.0
+flag_disable_z = true
+direction = Vector3( 0, -1, 0 )
+spread = 0.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 60.0
+initial_velocity_random = 0.1
+angular_velocity = 50.0
+angular_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+linear_accel = 4.0
+linear_accel_random = 1.0
+scale_random = 0.8
+scale_curve = SubResource( 8 )
+color = Color( 0.862745, 0.447059, 0.101961, 1 )
+anim_speed = 1.0
+anim_offset = 1.0
+anim_offset_random = 1.0
+
+[sub_resource type="Curve" id=10]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.0790191, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=11]
+curve = SubResource( 10 )
+
+[sub_resource type="ParticlesMaterial" id=12]
+lifetime_randomness = 0.2
+trail_divisor = 4
+emission_shape = 1
+emission_sphere_radius = 2.0
+flag_disable_z = true
+direction = Vector3( 0, -1, 0 )
+spread = 0.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 30.0
+initial_velocity_random = 0.1
+angular_velocity = 10.0
+angular_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+linear_accel = 4.0
+linear_accel_random = 1.0
+scale_random = 0.8
+scale_curve = SubResource( 11 )
+color = Color( 0.980392, 0.666667, 0, 1 )
+anim_speed = 1.0
+anim_offset = 1.0
+anim_offset_random = 1.0
+
+[sub_resource type="Animation" id=13]
+resource_name = "idle"
+length = 3.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("EyesSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2.8, 2.9, 3, 3.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 0, 1, 2, 0 ]
+}
+
+[node name="RatBoss" type="KinematicBody2D" groups=[
+"enemy",
+]]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource( 4 )
+health = 2
+WALKING_DIRECTION = -1
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+offset = Vector2( -12, -32 )
+flip_h = true
+hframes = 19
+frame = 15
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "idle"
+anims/dying = SubResource( 1 )
+anims/idle = SubResource( 2 )
+anims/run = SubResource( 3 )
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -24 )
+shape = SubResource( 4 )
+
+[node name="StartFightTimer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+autostart = true
+
+[node name="FloorLeft" type="RayCast2D" parent="."]
+position = Vector2( -39, -1 )
+enabled = true
+cast_to = Vector2( -1, 6 )
+collision_mask = 2
+
+[node name="FloorRight" type="RayCast2D" parent="."]
+position = Vector2( 39, -1 )
+enabled = true
+cast_to = Vector2( 1, 6 )
+collision_mask = 2
+
+[node name="WallLeft" type="RayCast2D" parent="."]
+position = Vector2( -39, -24 )
+enabled = true
+cast_to = Vector2( -6, 0 )
+
+[node name="WallRight" type="RayCast2D" parent="."]
+position = Vector2( 39, -24 )
+enabled = true
+cast_to = Vector2( 6, 0 )
+
+[node name="Hurtbox" parent="." instance=ExtResource( 2 )]
+collision_layer = 8
+
+[node name="Collider" parent="Hurtbox" index="0"]
+position = Vector2( -8, -24 )
+rotation = 1.5708
+shape = SubResource( 5 )
+
+[node name="Hitbox" parent="." instance=ExtResource( 3 )]
+position = Vector2( 30, 0 )
+collision_mask = 4
+damage = 25
+
+[node name="Collider" parent="Hitbox" index="0"]
+position = Vector2( 0, -6 )
+shape = SubResource( 6 )
+
+[node name="Flame" parent="." instance=ExtResource( 5 )]
+position = Vector2( 25, -1 )
+
+[node name="ParticlesBase" parent="Flame" index="1"]
+emitting = false
+amount = 200
+process_material = SubResource( 9 )
+
+[node name="PartcilesCore" parent="Flame" index="2"]
+emitting = false
+amount = 100
+process_material = SubResource( 12 )
+
+[node name="EyesSprite" parent="Flame" index="3"]
+visible = false
+
+[node name="Flame2" parent="." instance=ExtResource( 5 )]
+position = Vector2( -32, -5 )
+
+[node name="ParticlesBase" parent="Flame2" index="1"]
+emitting = false
+amount = 200
+process_material = SubResource( 9 )
+
+[node name="PartcilesCore" parent="Flame2" index="2"]
+emitting = false
+amount = 100
+process_material = SubResource( 12 )
+
+[node name="EyesSprite" parent="Flame2" index="3"]
+visible = false
+
+[node name="SpriteAnimator" parent="Flame2" index="4"]
+anims/idle = SubResource( 13 )
+
+[connection signal="timeout" from="StartFightTimer" to="." method="_on_StartFightTimer_timeout"]
+[connection signal="hit" from="Hurtbox" to="Hurtbox" method="_on_Hurtbox_hit"]
+[connection signal="hit" from="Hurtbox" to="." method="_on_Hurtbox_hit"]
+
+[editable path="Hurtbox"]
+[editable path="Hitbox"]
+[editable path="Flame"]
+[editable path="Flame2"]
