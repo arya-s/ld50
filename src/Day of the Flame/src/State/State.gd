@@ -5,6 +5,8 @@ enum DIRECTION {
 	RIGHT = 1
 }
 
+var revealed_secret = false
+
 var starting_level = null
 
 var ignored_level_transition = null

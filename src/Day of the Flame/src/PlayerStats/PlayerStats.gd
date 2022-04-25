@@ -5,9 +5,9 @@ class_name PlayerStats
 export(int) var MAX_HEALTH = 100
 export(int) var STARTING_HEALTH = 100
 export(int) var MAX_FIREBALLS = 2
-export(int) var FIREBALL_COST = 10
-export(int) var HEALTH_LOW_THRESHOLD = 25
-export(int) var HEALTH_CRITICAL_THRESHOLD = 7
+export(int) var FIREBALL_COST = 15
+export(int) var HEALTH_LOW_THRESHOLD = 8
+export(int) var HEALTH_CRITICAL_THRESHOLD = 4
 
 var active_bonfires = {
 	'Level_01': false,

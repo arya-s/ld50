@@ -63,11 +63,6 @@ position = Vector2( 14, 20 )
 scale = Vector2( 1.4, 2.4 )
 polygon = PoolVector2Array( -10, -5, -10, -8.33333, 7.14286, -8.33333, 7.14286, 8.33333, -10, 8.33333, -10, -1.66667, -4.28571, -1.66667, -4.28571, -1.66667, -4.28571, -5 )
 
-[node name="RevealTimer" type="Timer" parent="."]
-wait_time = 0.7
-one_shot = true
-
 [connection signal="hit" from="Hurtbox" to="." method="_on_Hurtbox_hit"]
-[connection signal="timeout" from="RevealTimer" to="." method="_on_RevealTimer_timeout"]
 
 [editable path="Hurtbox"]

@@ -5,7 +5,7 @@ enum DIRECTION {
 	RIGHT = 1	
 }
 
-export(int) var health = 20
+export(int) var health = 13
 
 export(int) var GRAVITY = 22
 export(DIRECTION) var WALKING_DIRECTION
@@ -30,6 +30,8 @@ enum STATES {
 
 var running_state = WALKING_DIRECTION
 var state = STATES.IDLE
+
+signal boss_died
 
 func _ready():
 	running_state = WALKING_DIRECTION
@@ -62,14 +64,19 @@ func _physics_process(delta):
 					motion = move_and_slide(motion, Vector2.UP)
 
 func _on_Hurtbox_hit(damage):
+	if ALIVE:
+		Global.play_boss_hit_sound()
+
 	if not start_fight_timer.is_stopped():
 		start_fight_timer.stop()
 		state = STATES.RUNNING
 	else:
 		health -= 1
 		
-		if health <= 0:
+		if ALIVE and health <= 0:
 			animation_player.play("dying")
+			print("emitting boss died")
+			emit_signal("boss_died")
 			ALIVE = false
 
 func _on_StartFightTimer_timeout():

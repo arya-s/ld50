@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://src/Flame/Flame.gd" type="Script" id=1]
 [ext_resource path="res://src/Flame/100hp_core.tres" type="Material" id=2]
@@ -40,6 +40,9 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 0, 0, 1, 2, 0 ]
 }
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 6.948, 11.2332 )
 
 [node name="Flame" type="Node2D"]
 script = ExtResource( 1 )
@@ -83,3 +86,7 @@ hframes = 3
 
 [node name="SpriteAnimator" type="AnimationPlayer" parent="."]
 anims/idle = SubResource( 5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -0.471939, -11.0905 )
+shape = SubResource( 6 )

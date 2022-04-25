@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://src/Flame/firegradient.tres" type="Texture" id=1]
-[ext_resource path="res://src/WaterDrop/WaterDrop.gd" type="Script" id=2]
+[ext_resource path="res://src/OilDrop/OilDrop.gd" type="Script" id=2]
 [ext_resource path="res://assets/water_drops.png" type="Texture" id=3]
 [ext_resource path="res://src/Hitbox/Hitbox.tscn" type="PackedScene" id=4]
 
@@ -72,6 +72,7 @@ rect = Rect2( -4, -10, 8, 18 )
 
 [node name="Hitbox" parent="." instance=ExtResource( 4 )]
 collision_mask = 6
+damage = 10
 
 [node name="Collider" parent="Hitbox" index="0"]
 shape = SubResource( 3 )

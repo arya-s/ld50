@@ -86,7 +86,7 @@ angle_random = 1.0
 color_ramp = ExtResource( 4 )
 
 [sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 8, 4 )
+extents = Vector2( 8, 5.5 )
 
 [sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 5.59007, 3.25791 )
@@ -143,15 +143,11 @@ fixed_fps = 24
 local_coords = false
 process_material = SubResource( 4 )
 
-[node name="Hurtbox" parent="." index="8"]
-visible = false
-
 [node name="Collider" parent="Hurtbox" index="0"]
-position = Vector2( 0, -3 )
+position = Vector2( 0, -4.5 )
 shape = SubResource( 5 )
 
 [node name="Hitbox" parent="." index="9"]
-visible = false
 damage = 10
 
 [node name="Collider" parent="Hitbox" index="0"]

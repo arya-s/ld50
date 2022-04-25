@@ -19,6 +19,7 @@ export(int) var JUMP_FORCE = 105
 export(int) var JUMP_HORIZONTAL_BOOST = 40
 export(int) var GRAVITY = 900
 export(int) var HALF_GRAVITY_THRESHOLD = 40
+export(int) var FAST_MAX_FALL = 240
 export(int) var FAST_MAX_ACCEL = 300
 export(int) var MAX_FALL = 160
 export(float) var AIR_MULT = 0.65
@@ -68,6 +69,7 @@ onready var animation_player = $AnimationPlayer
 onready var shooting_sound_player = $ShootingSoundPlayer
 onready var hurtbox_collider = $Hurtbox/Collider
 onready var invincible_animation_player = $InvincibleAnimationPlayer
+onready var end_screen = $End
 
 var health_to_collider = {
 	100: Vector2(3, 7),
@@ -77,6 +79,7 @@ var health_to_collider = {
 }
 
 signal touched_level_transition(level_transition)
+signal boss_died
 
 func _ready():
 	shooting_sounds.shuffle()
@@ -90,7 +93,7 @@ func _ready():
 		for level_transition in get_tree().get_nodes_in_group("level_transition"):
 			# find the correct matching connection
 			if level_transition != State.ignored_level_transition and level_transition.connection == State.level_connection:
-				global_position = level_transition.exit_position.global_position
+				global_position = level_transition.get_node('ExitPosition').global_position
 				break
 	# Otherwise we should be spawning at the last spawn point
 	elif State.player_spawn_point != null:
@@ -176,7 +179,7 @@ func move():
 	
 	# landing
 	if was_in_air and is_on_floor():
-		pass
+		Controls.rumble_gamepad(Controls.RumbleStrength.Light, Controls.RumbleLength.VeryShort)
 	
 	# just left ground
 	if was_on_floor and not is_on_floor() and not just_jumped:
@@ -279,6 +282,7 @@ func play_consume_sound():
 
 func shoot_fireball():
 	play_shooting_sound()
+	Controls.rumble_gamepad(Controls.RumbleStrength.Medium, Controls.RumbleLength.VeryShort)
 	
 	player_stats.fireballs += 1
 	shoot_cooldown_timer.start()
@@ -313,6 +317,7 @@ func _on_RoomDetectorRight_area_entered(room: Area2D):
 
 func die():	
 	Global.play_player_dying_sound()
+	Controls.rumble_gamepad(Controls.RumbleStrength.Strong, Controls.RumbleLength.Short)
 	
 	player_stats.reset_player_stats()
 	State.ignored_level_transition = null
@@ -327,6 +332,9 @@ func die():
 func _on_died():
 	die()
 	
+func low_hp_rumble():
+	Controls.rumble_gamepad(Controls.RumbleStrength.Light, Controls.RumbleLength.VeryShort)
+
 func play_shooting_sound():
 	var sound = shooting_sounds[randi() % shooting_sounds.size()]
 	shooting_sound_player.stream = sound
@@ -338,4 +346,12 @@ func set_invincible(value):
 func _on_Hurtbox_hit(damage):
 	if not invincible:
 		invincible_animation_player.play("invincible")
+		
+		# damage > 0 means we took actual damage not got healed
+		if damage > 0:
+			Controls.rumble_gamepad(Controls.RumbleStrength.Medium, Controls.RumbleLength.Short)
+			Global.play_player_hit_sound()
+			
 		heal(-damage)
+		
+		
