@@ -2,9 +2,10 @@ extends Node2D
 
 onready var animator = $SpriteAnimator
 onready var label = $Label
-onready var particles_base = $ParticlesBase
-onready var particles_core = $PartcilesCore
 onready var eyes = $EyesSprite
+onready var particles_base = $ParticlesBase
+onready var particles_core = $ParticlesCore
+onready var sprite = $Sprite
 
 var particles = {
 	100: {
@@ -55,41 +56,46 @@ func set_if_different(obj, key, val):
 
 func set_health(amount):
 	health = clamp(0, amount, MAX_HEALTH)
-	
-	if health > 75:
-		set_if_different(particles_base, "amount", particles[100].amount)
-		set_if_different(particles_base, "process_material", particles[100].base)
-		set_if_different(particles_base, "texture", particles[100].base_texture)
-		set_if_different(particles_core, "amount", particles[100].amount)
-		set_if_different(particles_core, "process_material", particles[100].core)
-		set_if_different(particles_core, "texture", particles[100].core_texture)
-		eyes.position = Vector2(eyes.position.x, particles[100].eyes_y)
-	elif health > 50:
-		set_if_different(particles_base, "amount", particles[75].amount)
-		set_if_different(particles_base, "process_material", particles[75].base)
-		set_if_different(particles_base, "texture", particles[75].base_texture)
-		set_if_different(particles_core, "amount", particles[75].amount)
-		set_if_different(particles_core, "process_material", particles[75].core)
-		set_if_different(particles_core, "texture", particles[75].core_texture)
-		eyes.position = Vector2(eyes.position.x, particles[75].eyes_y)
-	elif health > 25:
-		set_if_different(particles_base, "amount", particles[50].amount)
-		set_if_different(particles_base, "process_material", particles[50].base)
-		set_if_different(particles_base, "texture", particles[50].base_texture)
-		set_if_different(particles_core, "amount", particles[50].amount)
-		set_if_different(particles_core, "process_material", particles[50].core)
-		set_if_different(particles_core, "texture", particles[50].core_texture)
-		eyes.position = Vector2(eyes.position.x, particles[50].eyes_y)
-	else:
-		set_if_different(particles_base, "amount", particles[25].amount)
-		set_if_different(particles_base, "process_material", particles[25].base)
-		set_if_different(particles_base, "texture", particles[25].base_texture)
-		set_if_different(particles_core, "amount", particles[25].amount)
-		set_if_different(particles_core, "process_material", particles[25].core)
-		set_if_different(particles_core, "texture", particles[25].core_texture)
-		eyes.position = Vector2(eyes.position.x, particles[25].eyes_y)
+
+	if (particles_base != null && particles_core != null):
+		if health > 75:
+			set_if_different(particles_base, "amount", particles[100].amount)
+			set_if_different(particles_base, "process_material", particles[100].base)
+			set_if_different(particles_base, "texture", particles[100].base_texture)
+			set_if_different(particles_core, "amount", particles[100].amount)
+			set_if_different(particles_core, "process_material", particles[100].core)
+			set_if_different(particles_core, "texture", particles[100].core_texture)
+			eyes.position = Vector2(eyes.position.x, particles[100].eyes_y)
+		elif health > 50:
+			set_if_different(particles_base, "amount", particles[75].amount)
+			set_if_different(particles_base, "process_material", particles[75].base)
+			set_if_different(particles_base, "texture", particles[75].base_texture)
+			set_if_different(particles_core, "amount", particles[75].amount)
+			set_if_different(particles_core, "process_material", particles[75].core)
+			set_if_different(particles_core, "texture", particles[75].core_texture)
+			eyes.position = Vector2(eyes.position.x, particles[75].eyes_y)
+		elif health > 25:
+			set_if_different(particles_base, "amount", particles[50].amount)
+			set_if_different(particles_base, "process_material", particles[50].base)
+			set_if_different(particles_base, "texture", particles[50].base_texture)
+			set_if_different(particles_core, "amount", particles[50].amount)
+			set_if_different(particles_core, "process_material", particles[50].core)
+			set_if_different(particles_core, "texture", particles[50].core_texture)
+			eyes.position = Vector2(eyes.position.x, particles[50].eyes_y)
+		else:
+			set_if_different(particles_base, "amount", particles[25].amount)
+			set_if_different(particles_base, "process_material", particles[25].base)
+			set_if_different(particles_base, "texture", particles[25].base_texture)
+			set_if_different(particles_core, "amount", particles[25].amount)
+			set_if_different(particles_core, "process_material", particles[25].core)
+			set_if_different(particles_core, "texture", particles[25].core_texture)
+			eyes.position = Vector2(eyes.position.x, particles[25].eyes_y)
 		
 
 func play_idle_animation():
 	animator.play("idle")
 
+func move_x(offset_x: float):
+	if (particles_base != null && particles_core != null):
+		particles_base.position.x = offset_x
+		particles_core.position.x = offset_x

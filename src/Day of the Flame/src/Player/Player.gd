@@ -111,7 +111,7 @@ func _process(delta):
 		animation_player.stop(true)
 		animation_player.play("reset_from_low_hp")
 		
-	debug_label.text = str(player_stats.health)
+#	debug_label.text = str(player_stats.health)
 
 func _physics_process(delta):
 	just_jumped = false
@@ -168,6 +168,9 @@ func apply_horizontal_force(input_vector, delta):
 	else:
 		motion.x = move_toward(motion.x, input_vector.x * MAX_SPEED, ACCELERATION * mult * delta)
 
+	# Offset flame particles so that they better match the collision box
+	flame.move_x(motion.x * facing * 4 * delta)
+
 func move():
 	var was_in_air = not is_on_floor()
 	var was_on_floor = is_on_floor()
@@ -192,8 +195,11 @@ func jump_check(input_vector):
 			jump(input_vector, JUMP_FORCE)
 			just_jumped = true
 		else:
-			if wall_jump_check(facing):
-				wall_jump(-facing, JUMP_FORCE)
+			if wall_jump_check(RIGHT):
+				wall_jump(LEFT, JUMP_FORCE)
+				just_jumped = true
+			elif wall_jump_check(LEFT):
+				wall_jump(RIGHT, JUMP_FORCE)
 				just_jumped = true
 	elif Input.is_action_just_released("jump") and motion.y < -JUMP_FORCE / 2.0:
 		motion.y = -JUMP_FORCE / 2.0
